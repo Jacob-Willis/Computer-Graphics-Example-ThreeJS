@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Design", "Design", "{A8EC0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A90D688-2AA0-4024-99D9-766361C39A1A}"
 	ProjectSection(SolutionItems) = preProject
+		ParkGround.js = ParkGround.js
+		Sun.js = Sun.js
 		The Park.js = The Park.js
 	EndProjectSection
 EndProject

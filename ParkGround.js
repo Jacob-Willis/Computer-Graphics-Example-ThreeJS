@@ -6,7 +6,6 @@ function ParkGround(width, length, depth, widthSegments, heightSegments, depthSe
   
   var floor = new THREE.Mesh(floorGeometry, floorMaterial);
   floor.castShadow = true;
-  console.log(floor);
 
   return floor;
 }

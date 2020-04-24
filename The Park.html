@@ -20,53 +20,10 @@
   <!--and the trackball code-->
   <!-- Main javascript file -->
   <script src="./ParkGround.js"></script>
+  <script src="./Sun.js"></script>
   <script src="./The Park.js"></script>
 
+  <!--  for parameters see https://threejs.org/docs/#api/cameras/PerspectiveCamera-->
 
-  <!--<script>
-
-    //create the scene
-    var scene = new THREE.Scene();
-    var ratio = window.innerWidth / window.innerHeight;
-    //create the perspective camera
-    //for parameters see https://threejs.org/docs/#api/cameras/PerspectiveCamera
-    var camera = new THREE.PerspectiveCamera(45, ratio, 0.1, 1000);
-
-    //set the camera position
-    camera.position.set(10, 80, 90);
-    // and the direction
-    camera.lookAt(0, 0, 1);
-
-    //create the webgl renderer
-    var renderer = new THREE.WebGLRenderer();
-
-    //set the size of the rendering window
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    //add the renderer to the current document
-    document.body.appendChild(renderer.domElement);
-
-    //create the material of the cube (basic material)
-    var material_cube = new THREE.MeshBasicMaterial();
-    //set the color of the cube
-    material_cube.color = new THREE.Color(0, 1, 0);
-    //then set the renderer to wireframe
-    material_cube.wireframe = true;
-    //create the mesh of a cube
-
-    //BoxGeometry(width : Float, height : Float, depth : Float, widthSegments : Integer,
-    //heightSegments : Integer, depthSegments : Integer)
-    var geometry_cube = new THREE.BoxGeometry(150, 1, 150, 40, 40, 40);
-    var cube = new THREE.Mesh(geometry_cube, material_cube);
-
-    //and add to the scene
-    scene.add(cube);
-
-    renderer.render(scene, camera);
-
-    //link the resize of the window to the update of the camera
-    window.addEventListener('resize', ThePark.MyResize);
-
-  </script>-->
 </body>
 </html>

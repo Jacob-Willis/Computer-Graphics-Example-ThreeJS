@@ -13,14 +13,14 @@ function init() {
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   renderer = new THREE.WebGLRenderer();
-
   renderer.setSize(window.innerWidth, window.innerHeight);
-
   document.body.appendChild(renderer.domElement);
 
   parkGround = new ParkGround(150, 10, 150, 40, 40, 40);
-
   scene.add(parkGround);
+
+  sun = new Sun(10);
+  scene.add(sun);
 }
 
 function animate() {

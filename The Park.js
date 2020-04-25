@@ -1,4 +1,5 @@
 let scene, camera, renderer;
+var t = 0;
 
 function init() {
   var ratio = window.innerWidth / window.innerHeight;
@@ -23,10 +24,23 @@ function init() {
   scene.add(sun);
 }
 
-function animate() {
-  requestAnimationFrame(animate);
+function updateLoop() {
+  t += 0.01;
+
+  animateSun();
+
+  requestAnimationFrame(updateLoop);
 
   renderer.render(scene, camera);
+}
+
+function animateSun() {
+  // Animation speed multiplier
+  var s = 1.0
+
+  //sun.rotation.z += 0.001;
+  sun.position.x = 100 * Math.cos(t * s) + 0;
+  sun.position.y = 100 * Math.sin(t * s) + 0;
 }
 
 //this function is called when the window is resized
@@ -41,4 +55,4 @@ var onWindowResize = function () {
 window.addEventListener('resize', onWindowResize, false);
 
 init();
-animate();
+updateLoop();

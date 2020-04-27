@@ -13,9 +13,10 @@ function Sun(radius) {
   spotlight.target = parkGround;
   spotlight.castShadow = true;
   spotlight.angle = Math.PI / 2;
+  //spotlight.position = sphere.position;
 
-  //var spotlightHelper = new THREE.SpotLightHelper(spotlight);
-  //scene.add(spotlightHelper);
+  ////var spotlightHelper = new THREE.SpotLightHelper(spotlight);
+  ////scene.add(spotlightHelper);
 
   sphere.geometry.computeBoundingBox();
 

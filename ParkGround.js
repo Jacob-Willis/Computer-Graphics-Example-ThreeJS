@@ -1,10 +1,18 @@
 function ParkGround(width, length, depth, widthSegments, heightSegments, depthSegments) {
-  const floorGeometry = new THREE.BoxGeometry(width, length, depth, widthSegments, heightSegments, depthSegments);
-  const floorMaterial = new THREE.MeshLambertMaterial();
-  floorMaterial.color = new THREE.Color(0, 0, 1);
-  floorMaterial.wireframe = false;
+  var floorGeometry = new THREE.BoxGeometry(width, length, depth, widthSegments, heightSegments, depthSegments);
+  // var floorMaterial = new THREE.MeshLambertMaterial();
   
-  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  var floorMaterial = [
+    new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load( 'img/grass.png'), side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load( 'img/grass.png'), side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load( 'img/grass.png'), side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load( 'img/grass.png'), side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load( 'img/grass.png'), side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load( 'img/grass.png'), side: THREE.DoubleSide})
+  ]
+  var Material = new THREE.MeshFaceMaterial(floorMaterial)
+
+  var floor = new THREE.Mesh(floorGeometry, Material);
   floor.castShadow = true;
   floor.receiveShadow = false;
 

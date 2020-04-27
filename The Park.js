@@ -17,7 +17,7 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  parkGround = new ParkGround(150, 10, 150, 40, 40, 40);
+  parkGround = new ParkGround(200, 2, 150, 40, 40, 40);
   scene.add(parkGround);
 
   sun = new Sun(10);

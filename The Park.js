@@ -22,6 +22,23 @@ function init() {
 
   sun = new Sun(10);
   scene.add(sun);
+
+
+  var loader = new OBJLoader();
+
+// load a resource
+loader.load(
+	// resource URL
+	'img/tree.obj',
+	// called when resource is loaded
+	function ( object ) {
+
+    scene.add( object );
+    
+    object.position.x = 0;
+    object.position.y = 50;
+  }
+)
 }
 
 function updateLoop() {

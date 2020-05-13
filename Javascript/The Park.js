@@ -17,6 +17,9 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
+  //Adds ambient light to the scene
+  var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
+  scene.add(ambientLight);
   
   parkGround = new ParkGround(200, 10, 150, 40, 40, 40);
   scene.add(parkGround);
@@ -24,7 +27,7 @@ function init() {
   sun = new Sun(10);
   scene.add(sun);
 
-  moon = new Moon(10);
+  moon = new Moon(4);
   scene.add(moon);
 }
 
@@ -41,7 +44,7 @@ function updateLoop() {
 
 function animateSun() {
   // Animation speed multiplier
-  var speedMultiplyer = 1.0;
+  var speedMultiplyer = 0.7;
   var radius = 150;
 
   sun.rotation.z += 0.01;
@@ -51,7 +54,7 @@ function animateSun() {
 
 function animateMoon() {
   // Animation speed multiplier
-  var speedMultiplyer = 1.5;
+  var speedMultiplyer = 1.0;
   var radius = 110;
 
   moon.rotation.z += 0.01;

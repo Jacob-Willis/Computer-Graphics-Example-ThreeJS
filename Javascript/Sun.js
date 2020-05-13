@@ -5,8 +5,6 @@ function Sun(radius) {
   material.side = THREE.DoubleSide;
 
   var sphere = new THREE.Mesh(geometry, material);
-  sphere.castShadow = false;
-  sphere.receiveShadow = false;
 
   // Code for the lighting
   spotLight = new THREE.SpotLight(new THREE.Color(1, 1, 1), 1);
@@ -15,6 +13,9 @@ function Sun(radius) {
   spotLight.angle = Math.PI / 2;
 
   sphere.geometry.computeBoundingBox();
+
+  sphere.castShadow = true;
+  sphere.receiveShadow = true;
 
   var sunGroup = new THREE.Group();
   sunGroup.add(sphere);

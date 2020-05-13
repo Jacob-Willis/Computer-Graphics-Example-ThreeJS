@@ -5,20 +5,21 @@ function Moon(radius) {
   material.side = THREE.DoubleSide;
 
   var sphere = new THREE.Mesh(geometry, material);
-  sphere.castShadow = false;
-  sphere.receiveShadow = false;
 
   // Code for the lighting
-  spotLight = new THREE.SpotLight(new THREE.Color(1, 1, 1), 0.4);
+  spotLight = new THREE.SpotLight(new THREE.Color(1, 1, 1), 0.5);
   spotLight.target = parkGround;
   spotLight.castShadow = true;
   spotLight.angle = Math.PI / 2;
 
   sphere.geometry.computeBoundingBox();
 
-  var sunGroup = new THREE.Group();
-  sunGroup.add(sphere);
-  sunGroup.add(spotLight);
+  sphere.castShadow = true;
+  sphere.receiveShadow = true;
 
-  return sunGroup;
+  var moonGroup = new THREE.Group();
+  moonGroup.add(sphere);
+  moonGroup.add(spotLight);
+
+  return moonGroup;
 }

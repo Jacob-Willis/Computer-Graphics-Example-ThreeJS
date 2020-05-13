@@ -24,15 +24,15 @@ function init() {
   sun = new Sun(10);
   scene.add(sun);
 
-
-
-
+  moon = new Moon(10);
+  scene.add(moon);
 }
 
 function updateLoop() {
   t += 0.01;
 
   animateSun();
+  animateMoon();
 
   requestAnimationFrame(updateLoop);
 
@@ -44,9 +44,19 @@ function animateSun() {
   var speedMultiplyer = 1.0;
   var radius = 150;
 
-  sun.rotation.z += 0.001;
+  sun.rotation.z += 0.01;
   sun.position.x = radius * Math.cos(t * speedMultiplyer) + 0;
   sun.position.y = radius * Math.sin(t * speedMultiplyer) + 0;
+}
+
+function animateMoon() {
+  // Animation speed multiplier
+  var speedMultiplyer = 1.5;
+  var radius = 110;
+
+  moon.rotation.z += 0.01;
+  moon.position.x = radius * Math.cos(t * speedMultiplyer) + 0;
+  moon.position.y = radius * Math.sin(t * speedMultiplyer) + 0;
 }
 
 //this function is called when the window is resized

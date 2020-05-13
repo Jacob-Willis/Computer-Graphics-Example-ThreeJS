@@ -9,7 +9,7 @@ function init() {
   camera = new THREE.PerspectiveCamera(70, ratio, 0.1, 1000);
 
   //set the camera position
-  camera.position.set(0, 100, 100);
+  camera.position.set(0, 130, 150);
   // and the direction
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -18,7 +18,7 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   
-  parkGround = new ParkGround(200, 2, 150, 40, 40, 40);
+  parkGround = new ParkGround(200, 10, 150, 40, 40, 40);
   scene.add(parkGround);
 
   sun = new Sun(10);
@@ -41,11 +41,12 @@ function updateLoop() {
 
 function animateSun() {
   // Animation speed multiplier
-  var s = 1.0
+  var speedMultiplyer = 1.0;
+  var radius = 150;
 
-  //sun.rotation.z += 0.001;
-  sun.position.x = 100 * Math.cos(t * s) + 0;
-  sun.position.y = 100 * Math.sin(t * s) + 0;
+  sun.rotation.z += 0.001;
+  sun.position.x = radius * Math.cos(t * speedMultiplyer) + 0;
+  sun.position.y = radius * Math.sin(t * speedMultiplyer) + 0;
 }
 
 //this function is called when the window is resized

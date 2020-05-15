@@ -1,3 +1,5 @@
+var palmTreeDist = -80;
+
 var mtlLoader = new THREE.MTLLoader();
  mtlLoader.setTexturePath( "img/tree/" );
  mtlLoader.setPath( "img/tree/" );
@@ -9,32 +11,70 @@ var mtlLoader = new THREE.MTLLoader();
    objLoader.setPath( "img/tree/" );
    objLoader.setMaterials(materials);
 
+   for(i = 0; i < 9; i++){
    objLoader.load("Palm_Tree.obj", function(mesh)
    {
-      var CenterBB;
-      var SizeBB;
-      mesh.traverse(function ( child )
-      {
-          if ( child instanceof THREE.Mesh )
-          {
-              var mygeometry = new THREE.Geometry().fromBufferGeometry( child.geometry );
-              mygeometry.computeBoundingBox();
-              child.material.color= new THREE.Color(1,1,1);
-              CenterBB=mygeometry.boundingBox.getCenter();
-              SizeBB=mygeometry.boundingBox.getSize();
-          }
-      });
-      
-      scene.add(mesh);
-      
-      var sca = new THREE.Matrix4();
-      var tra = new THREE.Matrix4();
-      var combined = new THREE.Matrix4();
+    
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = 5;
+    mesh.position.z = 70; 
+    mesh.position.x = palmTreeDist; 
+    scene.add(mesh);
+    palmTreeDist += 20;
+    
+    });
+}
+});
 
-      sca.makeScale(60/SizeBB.length(),60/SizeBB.length(),60/SizeBB.length());
-      tra.makeTranslation (-CenterBB.x,-CenterBB.y,-CenterBB.z);
-      combined.multiply(sca);
-      combined.multiply(tra);
-      mesh.applyMatrix(combined);
-	});
+var oakTreeDist = -70;
+
+var mtlLoader = new THREE.MTLLoader();
+ mtlLoader.setTexturePath( "img/tree/" );
+ mtlLoader.setPath( "img/tree/" );
+
+ mtlLoader.load("Oak_Tree.mtl", function(materials)
+ {
+   materials.preload();
+   var objLoader = new THREE.OBJLoader();
+   objLoader.setPath( "img/tree/" );
+   objLoader.setMaterials(materials);
+
+   for(i = 0; i < 8; i++){
+   objLoader.load("Oak_Tree.obj", function(mesh)
+   {
+    
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = 5;
+    mesh.position.z = oakTreeDist; 
+    mesh.position.x = -95; 
+    scene.add(mesh);
+    oakTreeDist += 20;
+    
+    });
+}
+});
+
+var poplarTreeDist = -70;
+
+var mtlLoader = new THREE.MTLLoader();
+ mtlLoader.setTexturePath( "img/tree/" );
+ mtlLoader.setPath( "img/tree/" );
+
+ mtlLoader.load("Poplar_Tree.mtl", function(materials)
+ {
+   materials.preload();
+   var objLoader = new THREE.OBJLoader();
+   objLoader.setPath( "img/tree/" );
+   objLoader.setMaterials(materials);
+
+   for(i = 0; i < 8; i++){
+   objLoader.load("Poplar_Tree.obj", function(mesh)
+   {
+    
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = 5;
+    mesh.position.z = poplarTreeDist; 
+    mesh.position.x = 95; 
+    scene.add(mesh);
+    poplarTreeDist += 20;
+    
+    });
+}
 });

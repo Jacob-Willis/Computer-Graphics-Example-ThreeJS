@@ -9,7 +9,7 @@ function init() {
   camera = new THREE.PerspectiveCamera(70, ratio, 0.1, 1000);
 
   //set the camera position
-  camera.position.set(0, 100, 100);
+  camera.position.set(0, 130, 150);
   // and the direction
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -17,22 +17,25 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
+  //Adds ambient light to the scene
+  var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
+  scene.add(ambientLight);
   
-  parkGround = new ParkGround(200, 2, 150, 40, 40, 40);
+  parkGround = new ParkGround(200, 10, 150, 40, 40, 40);
   scene.add(parkGround);
 
   sun = new Sun(10);
   scene.add(sun);
 
-
-
-
+  moon = new Moon(4);
+  scene.add(moon);
 }
 
 function updateLoop() {
   t += 0.01;
 
   animateSun();
+  animateMoon();
 
   requestAnimationFrame(updateLoop);
 
@@ -41,11 +44,22 @@ function updateLoop() {
 
 function animateSun() {
   // Animation speed multiplier
-  var s = 1.0
+  var speedMultiplyer = 0.7;
+  var radius = 150;
 
-  //sun.rotation.z += 0.001;
-  sun.position.x = 100 * Math.cos(t * s) + 0;
-  sun.position.y = 100 * Math.sin(t * s) + 0;
+  sun.rotation.z += 0.01;
+  sun.position.x = radius * Math.cos(t * speedMultiplyer) + 0;
+  sun.position.y = radius * Math.sin(t * speedMultiplyer) + 0;
+}
+
+function animateMoon() {
+  // Animation speed multiplier
+  var speedMultiplyer = 1.0;
+  var radius = 110;
+
+  moon.rotation.z += 0.01;
+  moon.position.x = radius * Math.cos(t * speedMultiplyer) + 0;
+  moon.position.y = radius * Math.sin(t * speedMultiplyer) + 0;
 }
 
 //this function is called when the window is resized

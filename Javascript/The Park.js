@@ -16,11 +16,13 @@ function init() {
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
+  renderer.shadowMapEnabled = true;
+  renderer.shadowMapSoft = true;
 
   //Adds ambient light to the scene
   var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
   scene.add(ambientLight);
-  
+
   parkGround = new ParkGround(200, 10, 150, 40, 40, 40);
   scene.add(parkGround);
 
@@ -29,6 +31,19 @@ function init() {
 
   moon = new Moon(4);
   scene.add(moon);
+
+  var boxgeometry = new THREE.CubeGeometry(10, 10, 10);
+  var boxmaterial = new THREE.MeshLambertMaterial({
+    color: 0x0aeedf
+  });
+  var cube = new THREE.Mesh(boxgeometry, boxmaterial);
+  cube.castShadow = true;
+  cube.position.x = 0;
+  cube.position.y = 10;
+  cube.position.z = 0;
+
+  scene.add(cube);
+
 }
 
 function updateLoop() {

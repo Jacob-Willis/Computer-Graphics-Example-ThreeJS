@@ -1,4 +1,4 @@
-function Rain(rainCount) {
+function Rain(rainCount, rainColour, rainSize) {
   rainGeo = new THREE.Geometry();
   for (let i = 0; i < rainCount; i++) {
     rainDrop = new THREE.Vector3(
@@ -11,8 +11,8 @@ function Rain(rainCount) {
     rainGeo.vertices.push(rainDrop);
   }
   rainMaterial = new THREE.PointsMaterial({
-    color: 0xaaaaaa,
-    size: 0.1,
+    color: rainColour,
+    size: rainSize,
     transparent: true
   });
   rain = new THREE.Points(rainGeo, rainMaterial);

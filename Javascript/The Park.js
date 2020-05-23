@@ -2,6 +2,8 @@ let scene, camera, renderer;
 let cloudParticles = [];
 let cloudCount = 25;
 let rainCount = 15000;
+let rainColour = 0xaaaaaa;
+let rainSize = 0.1;
 let fogColour = 0x11111f;
 let fogDensity = 0.002;
 let lightningColour = 0x062d89;
@@ -63,7 +65,7 @@ function init() {
   lightning = new Lightning(lightningColour, lightningIntensity, lightningDecay);
 
   //Adds rain
-  rain = new Rain(rainCount);
+  rain = new Rain(rainCount, rainColour, rainSize);
 }
 
 function updateLoop() {

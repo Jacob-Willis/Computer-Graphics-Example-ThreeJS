@@ -71,26 +71,3 @@ treePosZ2+=7.3;
 }
 //Orbit contorls
 controls = new THREE.OrbitControls( camera, renderer.domElement );
-
- //then add ambient
-
- var cameralight = new THREE.PointLight( new THREE.Color(1,1,1), 1 );
- camera.add( cameralight );
- scene.add(camera);
-
-
-  //final update loop
-  var MyUpdateLoop = function ( )
-  {
-    //call the render with the scene and the camera
-    renderer.render(scene,camera);
-
-    controls.update();
-
-    //finally perform a recoursive call to update again
-    //this must be called because the mouse change the camera position
-    requestAnimationFrame(MyUpdateLoop);
-
-  };
-
-  requestAnimationFrame(MyUpdateLoop);

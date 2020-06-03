@@ -1,4 +1,20 @@
 //var slider = document.getElementById("myRange");
+var geometry = new THREE.BoxGeometry( 10, 10, 10 );
+var material = new THREE.MeshBasicMaterial( {color: 'rgb(255, 255, 255)',} );
+var cube = new THREE.Mesh( geometry, material );
+cube.position.y = 10;
+cube.castShadow = true;
+cube.recieveShadow = true;
+scene.add( cube );
+
+var geometry = new THREE.BoxGeometry( 10, 10, 10 );
+var material = new THREE.MeshBasicMaterial( {color: 'rgb(255, 255, 255)',} );
+var cube = new THREE.Mesh( geometry, material );
+cube.position.y = 20;
+cube.position.x = 10;
+cube.castShadow = true;
+cube.recieveShadow = true;
+scene.add( cube );
 
 var gui = new dat.GUI();
 

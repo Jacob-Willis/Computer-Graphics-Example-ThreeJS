@@ -6,20 +6,30 @@ function Sun(radius) {
 
   var sphere = new THREE.Mesh(geometry, material);
 
-  // Code for the lighting
-  spotLight = new THREE.SpotLight(new THREE.Color(1, 1, 1), 1);
-  spotLight.target = parkGround;
-  spotLight.castShadow = true;
-  spotLight.angle = Math.PI / 2;
+  // Code for the lighting of the sun
+  light = new THREE.SpotLight(0xdfebff, 1.75);
+
+  light.castShadow = true;
+  light.shadowCameraVisible = true;
+
+  light.shadowMapWidth = 512;
+  light.shadowMapHeight = 512;
+
+  var d = 200;
+
+  light.shadowCameraLeft = -d;
+  light.shadowCameraRight = d;
+  light.shadowCameraTop = d;
+  light.shadowCameraBottom = -d;
+
+  light.shadowCameraFar = 1000;
+  light.shadowDarkness = 0.2;
 
   sphere.geometry.computeBoundingBox();
 
-  sphere.castShadow = true;
-  sphere.receiveShadow = true;
-
   var sunGroup = new THREE.Group();
   sunGroup.add(sphere);
-  sunGroup.add(spotLight);
+  sunGroup.add(light);
 
   return sunGroup;
 }

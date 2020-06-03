@@ -1,12 +1,12 @@
 //var slider = document.getElementById("myRange");
-var g = 1;
-slider.oninput = function(){
-  
-  output.innerHTML = this.value;
-  g = slider.value;
-  console.log(g)
 
-//Palm trees
+var gui = new dat.GUI();
+
+function tree(s){
+  
+  //Palm trees
+  // var s;
+  // s += controls.b;
 var palmTreeDist = -80;
 var mtlLoader = new THREE.MTLLoader();
  mtlLoader.setTexturePath( "img/tree/" );
@@ -19,19 +19,51 @@ var mtlLoader = new THREE.MTLLoader();
    objLoader.setPath( "img/tree/" );
    objLoader.setMaterials(materials);
    for(i = 0; i < 9; i++){
-   objLoader.load("Palm_Tree.obj", function(mesh)
+   objLoader.load("Palm_Tree.obj", function(meshs)
    {
-    mesh.scale.x = mesh.scale.y = mesh.scale.z = g;
-    mesh.position.z = 70; 
-    mesh.position.x = palmTreeDist;
-    //scene.remove(mesh);
-    scene.add(mesh);
+    meshs.scale.x = meshs.scale.y = meshs.scale.z = 5;
+    meshs.position.z = 70; 
+    meshs.position.x = palmTreeDist;
+    meshs.position.y = 0; 
+    scene.add(meshs);
     palmTreeDist += 20;
     
-    });
-}
-});}
+    //return s;
+    //var seperate = gui.addFolder('seperater');
+    gui.add(meshs.scale, 'x', 0, 20);
+    gui.add(meshs.scale, 'y', 0, 20);
+    gui.add(meshs.scale, 'z', 0, 20);
+    
 
+    });
+    //updateLoops(renderer, scene, camera)
+    
+}
+
+});
+}
+var controls = new function() {
+  this.b = 1;
+  
+
+  
+} 
+gui.add(controls, 'b', 0, 20);
+var h;
+h += controls.b;
+tree(h);
+
+//tree(6);
+function updateLoops(renderer, scene, camera) {
+     renderer.render(scene, camera);
+ // meshs.scale.x = meshs.scale.y = meshs.scale.z = g;
+ 
+
+  requestAnimationFrame(function(){
+    updateLoops(renderer, scene, camera);
+  })
+}
+//updateLoops();
 //Oak trees
 var oakTreeDist = -70;
 var mtlLoader = new THREE.MTLLoader();
@@ -48,7 +80,15 @@ var mtlLoader = new THREE.MTLLoader();
    for(i = 0; i < 8; i++){
    objLoader.load("Oak_Tree.obj", function(mesh)
    {
-    
+    mesh.traverse(function ( child )
+    {
+        if ( child instanceof THREE.Mesh )
+        {
+            var mygeometry = new THREE.Geometry().fromBufferGeometry( child.geometry );
+            mygeometry.computeBoundingBox();
+            child.material.color= new THREE.Color(1,0,0);
+        }
+      });
     mesh.scale.x = mesh.scale.y = mesh.scale.z = 5;
     mesh.position.z = oakTreeDist; 
     mesh.position.x = -95; 
@@ -79,7 +119,7 @@ var mtlLoader = new THREE.MTLLoader();
     mesh.scale.x = mesh.scale.y = mesh.scale.z = 5;
     mesh.position.z = poplarTreeDist; 
     mesh.position.x = 95; 
-    mesh.name = "loaded_mesh";
+    //mesh.name = "loaded_mesh";
     scene.add(mesh);
     poplarTreeDist += 20;
     
@@ -87,16 +127,79 @@ var mtlLoader = new THREE.MTLLoader();
 }
 });
 
-//Move tree with mouse control
+// Poplar trees
+
+// var mtlLoader = new THREE.MTLLoader();
+//  mtlLoader.setTexturePath( "img/tree/" );
+//  mtlLoader.setPath( "img/tree/" );
+
+//  mtlLoader.load("Poplar_Tree.mtl", function(materials)
+// {
+//   materials.preload();
+//    var objLoader = new THREE.OBJLoader();
+//    objLoader.setPath( "img/tree/" );
+//    objLoader.setMaterials(materials);
+
+   
+//    objLoader.load("Poplar_Tree.obj", function(mesh)
+//    {
+    
+//     mesh.scale.x = mesh.scale.y = mesh.scale.z = 5;
+//     mesh.position.z = 0; 
+//     mesh.position.x = 0; 
+//     //mesh.name = "loaded_mesh";
+//     scene.add(mesh);
+    
+//    });
+// });
+
+ //MESH LOADING
+ var loader = new THREE.PLYLoader();
+ var mesh = null;
+ loader.load('img/bunny.ply', function ( geometry )
+ {
+      // geometry.computeVertexNormals();
+      // geometry.computeBoundingBox();
+
+      // var center = geometry.boundingBox.getCenter();
+      // var size = geometry.boundingBox.getSize();
+      // var min = geometry.boundingBox.min;
+
+      // var sca = new THREE.Matrix4();
+      // var tra = new THREE.Matrix4();
+
+      // var ScaleFact=5/size.length();
+      // sca.makeScale(ScaleFact,ScaleFact,ScaleFact);
+      // //tra.makeTranslation (-center.x,-center.y,-min.z);
+      // tra.makeTranslation (-center.x,-center.y,-min.z);
+
+      var material = new THREE.MeshPhongMaterial();
+      material.color= new THREE.Color(0.9,0.9,0.9);
+      material.shininess=100;
+      mesh = new THREE.Mesh( geometry, material );
+
+      // mesh.applyMatrix(tra);
+      // mesh.applyMatrix(sca);
+      mesh.position.x = 0;
+          mesh.position.y = 8; 
+          mesh.position.z = 0;
+          mesh.scale.x = mesh.scale.y = mesh.scale.z = 44;
+
+      mesh.name = "loaded_mesh";
+
+      scene.add( mesh );
+    } );
+
+// //Move tree with mouse control
 var raycaster = new THREE.Raycaster();
 
       var selectedObj = false;
 
       function onDocumentMouseDown( event ) {
 
-         var mouse = new THREE.Vector2;
-         mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-         mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+         var mouse = new THREE.Vector3;
+         mouse.x = -( event.clientX / renderer.domElement.clientWidth ) * 2 + 1;
+         mouse.y = -( event.clientY / renderer.domElement.clientHeight ) * 2 - 1;
 
          raycaster.setFromCamera( mouse, camera );
 
@@ -121,6 +224,5 @@ var raycaster = new THREE.Raycaster();
              }
          }
       }
-
       // when the mouse is clicked, call the given function
       document.addEventListener( 'mousedown', onDocumentMouseDown, false );

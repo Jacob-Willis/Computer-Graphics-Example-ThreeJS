@@ -13,6 +13,7 @@ function Moon(radius) {
   spotLight.angle = Math.PI / 2;
 
   sphere.geometry.computeBoundingBox();
+  sphere.position.x = 0;
 
   sphere.castShadow = true;
   sphere.receiveShadow = true;

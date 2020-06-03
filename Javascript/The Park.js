@@ -2,6 +2,7 @@ let scene, camera, renderer;
 var t = 0;
 
 function init() {
+  
   var ratio = window.innerWidth / window.innerHeight;
 
   scene = new THREE.Scene();
@@ -21,7 +22,7 @@ function init() {
   var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
   scene.add(ambientLight);
   
-  parkGround = new ParkGround(200, 10, 150, 40, 40, 40);
+  parkGround = new ParkGround(200, 0, 150, 40, 40, 40);
   scene.add(parkGround);
 
   sun = new Sun(10);
@@ -55,7 +56,7 @@ function animateSun() {
 function animateMoon() {
   // Animation speed multiplier
   var speedMultiplyer = 1.0;
-  var radius = 110;
+  var radius = 150;
 
   moon.rotation.z += 0.01;
   moon.position.x = radius * Math.cos(t * speedMultiplyer) + 0;

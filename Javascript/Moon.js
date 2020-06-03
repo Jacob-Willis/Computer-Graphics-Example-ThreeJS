@@ -25,6 +25,7 @@ function Moon(radius) {
   light.shadowDarkness = 0.2;
 
   sphere.geometry.computeBoundingBox();
+  sphere.position.x = 0;
 
   sphere.receiveShadow = true;
   //sphere.castShadow = true;

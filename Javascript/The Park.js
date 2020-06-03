@@ -12,6 +12,7 @@ let lightningDecay = 1.7;
 var t = 0;
 
 function init() {
+  
   var ratio = window.innerWidth / window.innerHeight;
 
   scene = new THREE.Scene();
@@ -32,8 +33,9 @@ function init() {
   //Adds ambient light to the scene
   var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
   scene.add(ambientLight);
+  
+  parkGround = new ParkGround(200, 0, 150, 40, 40, 40);
 
-  parkGround = new ParkGround(200, 10, 150, 40, 40, 40);
   scene.add(parkGround);
 
   sun = new Sun(10);

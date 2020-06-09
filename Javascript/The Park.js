@@ -108,6 +108,21 @@ function init() {
   })
 }
 
+var deleteObj = { delete: function () { console.log("clicked") } };
+var deleteTree = gui.add(deleteObj, 'delete').name('Delete selected tree');
+
+deleteTree.onChange(function () {
+  if (mesh.name == "tree") {
+    console.log("delete tree here:");
+    console.log(mesh);
+    console.log(scene.children);
+    scene.remove(mesh);
+    console.log(scene.children);
+  } else {
+    console.log("No tree selected");
+  }
+})
+
 function updateLoop() {
   t += 0.01;
 

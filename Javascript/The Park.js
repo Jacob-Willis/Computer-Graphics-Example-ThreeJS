@@ -14,6 +14,7 @@ var snow = 0.1;
 var sunDiameter = 200;
 var moonDiameter  = 150;
 var t = 0;
+
 parameters = {
   b: true,
   c: false,
@@ -107,22 +108,6 @@ function init() {
     if(jar == false) {snow = 0.01}
   })
 }
-
-var deleteObj = { delete: function () { console.log("clicked") } };
-var deleteTree = gui.add(deleteObj, 'delete').name('Delete selected tree');
-
-deleteTree.onChange(function () {
-  if (mesh.name == "tree") {
-
-    var objToRemove = scene.getObjectById(mesh.id);
-    scene.remove(objToRemove.parent);
-
-    selectedObj = false;
-    mesh = scene;
-  } else {
-    console.log("No tree selected");
-  }
-})
 
 function updateLoop() {
   t += 0.01;

@@ -113,11 +113,12 @@ var deleteTree = gui.add(deleteObj, 'delete').name('Delete selected tree');
 
 deleteTree.onChange(function () {
   if (mesh.name == "tree") {
-    console.log("delete tree here:");
-    console.log(mesh);
-    console.log(scene.children);
-    scene.remove(mesh);
-    console.log(scene.children);
+
+    var objToRemove = scene.getObjectById(mesh.id);
+    scene.remove(objToRemove.parent);
+
+    selectedObj = false;
+    mesh = scene;
   } else {
     console.log("No tree selected");
   }
@@ -200,7 +201,6 @@ function onDocumentMouseDown(event) {
   var intersects = raycaster.intersectObjects(scene.children, true);
 
   if (intersects.length > 0) {
-    console.log(intersects);
     if (!selectedObj) {
       for (var i of intersects) {
         mesh = i.object;
@@ -211,7 +211,7 @@ function onDocumentMouseDown(event) {
           break;
         }
         if (mesh.name == "cube") {
-          console.log("Selected Cuve!");
+          console.log("Selected Cube!");
           mesh.material.color = new THREE.Color(1, 0.5, 0.5);
           selectedObj = true;
           break;
@@ -223,7 +223,6 @@ function onDocumentMouseDown(event) {
       //mesh.material.color = new THREE.Color(0.9, 0.9, 0.9);
       var pos = intersects[0].point;
       console.log("Placed!");
-      console.log(pos);
       if (mesh.name == "tree") {
         mesh.parent.position.x = pos.x;
         mesh.parent.position.z = pos.z;

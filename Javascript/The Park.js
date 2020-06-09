@@ -3,16 +3,38 @@ let cloudParticles = [];
 let cloudCount = 25;
 let rainCount = 15000;
 let rainColour = 0xaaaaaa;
-let rainSize = 0.1;
+var rainSize = 0.6;
 let fogColour = 0x11111f;
 let fogDensity = 0.002;
 let lightningColour = 0x062d89;
 let lightningIntensity = 30;
 let lightningDecay = 1.7;
+var isSnow = false;
+var snow = 0.1;
+var sunDiameter = 200;
+var moonDiameter  = 150;
 var t = 0;
+parameters = {
+  b: true,
+  c: false,
+  Sun: 200,
+  Moon: 150
+}
+
+var Size = gui.addFolder('Sun and Moon diameter');
+ var h = Size.add(parameters, 'Sun', 200, 300);
+ h.onChange(function(jar){
+  sunDiameter = jar;
+})
+
+var h = Size.add(parameters, 'Moon', 150, 250);
+ h.onChange(function(jar){
+  moonDiameter = jar;
+})
+Size.open();
 
 function init() {
-
+  
   var ratio = window.innerWidth / window.innerHeight;
 
   scene = new THREE.Scene();
@@ -34,40 +56,56 @@ function init() {
   var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
   scene.add(ambientLight);
 
-  parkGround = new ParkGround(200, 0, 150, 40, 40, 40);
+  parkGround = new ParkGround(250, 0, 170, 40, 40, 40);
 
   scene.add(parkGround);
 
-  sun = new Sun(10);
+  sun = new Sun(12);
   scene.add(sun);
-
-  moon = new Moon(4);
+  
+  //change sun visability
+  var model = gui.add(parameters, 'b').name('Sun visible');
+  model.onChange(function(jar){
+    sun.visible = jar;
+  })
+  
+  moon = new Moon(8);
   scene.add(moon);
 
-  //var boxgeometry = new THREE.CubeGeometry(10, 10, 10);
-  //var boxmaterial = new THREE.MeshLambertMaterial({
-  //  color: 0x0aeedf
-  //});
-  //var cube = new THREE.Mesh(boxgeometry, boxmaterial);
-  //cube.castShadow = true;
-  //cube.position.x = 0;
-  //cube.position.y = 10;
-  //cube.position.z = 0;
-
-  //scene.add(cube);
+  //change moon visibility
+  var model = gui.add(parameters, 'b').name('Moon visible');
+  model.onChange(function(jar){
+    moon.visible = jar;
+  })
 
   // create a foglike atmosphere to the scene!
   scene.fog = new THREE.FogExp2(fogColour, fogDensity);
   renderer.setClearColor(scene.fog.color);
 
-  // adds clouds to scene
-  cloud = new Clouds(cloudCount);
+  // adds clouds to scene, change visibility
+  // var model = gui.add(parameters, 'c').name('cloud visible');
+  // model.onChange(function(jar){
+  //   if(jar){
+    cloud = new Clouds(cloudCount);
+  //   }
+  // })
 
   //adds lightning to clouds
   lightning = new Lightning(lightningColour, lightningIntensity, lightningDecay);
 
-  //Adds rain
+  //Adds rain, change visibility
   rain = new Rain(rainCount, rainColour, rainSize);
+  var model = gui.add(parameters, 'b').name('Rain visible');
+  model.onChange(function(jar){
+    rain.visible = jar;
+  })
+
+  //Change weather to snowor rain
+  var model = gui.add(parameters, 'c').name('Snow');
+  model.onChange(function(jar){
+    if(jar == true){ snow = 0.0003}
+    if(jar == false) {snow = 0.01}
+  })
 }
 
 function updateLoop() {
@@ -80,7 +118,7 @@ function updateLoop() {
     p.rotation.z -= 0.002;
   });
   rainGeo.vertices.forEach(p => {
-    p.velocity -= 0.1 + Math.random() * 0.1;
+    p.velocity -= snow + Math.random() * snow;
     p.y += p.velocity;
     if (p.y < -200) {
       p.y = 200;
@@ -107,7 +145,7 @@ function updateLoop() {
 function animateSun() {
   // Animation speed multiplier
   var speedMultiplyer = 0.7;
-  var diameter = 200;
+  var diameter = sunDiameter;
 
   sun.rotation.z += 0.01;
   sun.position.x = diameter * Math.cos(t * speedMultiplyer) + 0;
@@ -117,7 +155,7 @@ function animateSun() {
 function animateMoon() {
   // Animation speed multiplier
   var speedMultiplyer = 1.0;
-  var radius = 150;
+  var radius = moonDiameter;
 
   moon.rotation.z += 0.01;
   moon.position.x = radius * Math.cos(t * speedMultiplyer) + 0;
@@ -190,3 +228,6 @@ document.addEventListener('mousedown', onDocumentMouseDown, false);
 
 init();
 updateLoop();
+
+//Orbit contorls
+controls = new THREE.OrbitControls( camera, renderer.domElement );

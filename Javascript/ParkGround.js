@@ -15,6 +15,10 @@ function ParkGround(width, length, depth, widthSegments, heightSegments, depthSe
   var floor = new THREE.Mesh(floorGeometry, Material);
   floor.name = "Ground";
   floor.receiveShadow = true;
-
+  
+  var parkSize = gui.addFolder('Park size');
+  parkSize.add(floor.scale, 'x', 1, 2);
+  parkSize.add(floor.scale, 'z', 1, 1.5);
+  parkSize.open();
   return floor;
 }

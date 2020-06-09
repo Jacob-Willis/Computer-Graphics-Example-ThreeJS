@@ -1,3 +1,5 @@
+var gui = new dat.GUI();
+
 function Clouds(cloudCount) {
   let loader = new THREE.TextureLoader();
   loader.load("/The Park/Resources/smoke.png", function (texture) {
@@ -13,10 +15,11 @@ function Clouds(cloudCount) {
         500,
         Math.random() * 500 - 450
       );
-      cloud.position.y = 50;
+      cloud.position.y = 150;
       cloud.rotation.x = 1.16;
       cloud.rotation.y = -0.12;
       cloud.rotation.z = Math.random() * 360;
+      cloud.position.z = 0;
       cloud.material.opacity = 0.6;
       scene.add(cloud);
       cloudParticles.push(cloud);

@@ -8,14 +8,10 @@ cube.recieveShadow = true;
 cube.name = "cube";
 scene.add(cube);
 
-var gui = new dat.GUI();
 
-function tree(s) {
-
-  //Palm trees
-  // var s;
-  // s += controls.b;
-  var palmTreeDist = -80;
+//palm tree
+function palmTree() {
+  var palmTreeDist = -110;
   var mtlLoader = new THREE.MTLLoader();
   mtlLoader.setTexturePath("img/tree/");
   mtlLoader.setPath("img/tree/");
@@ -25,10 +21,10 @@ function tree(s) {
     var objLoader = new THREE.OBJLoader();
     objLoader.setPath("img/tree/");
     objLoader.setMaterials(materials);
-    for (i = 0; i < 9; i++) {
+    for (i = 0; i < 12; i++) {
       objLoader.load("Palm_Tree.obj", function (object) {
         object.scale.x = object.scale.y = object.scale.z = 5;
-        object.position.z = 70;
+        object.position.z = 80;
         object.position.x = palmTreeDist;
         object.position.y = 0;
         object.children[0].name = "tree";
@@ -39,26 +35,45 @@ function tree(s) {
 
         //return s;
         //var seperate = gui.addFolder('seperater');
-        gui.add(object.scale, 'x', 0, 20);
-        gui.add(object.scale, 'y', 0, 20);
-        gui.add(object.scale, 'z', 0, 20);
-
-
+        // gui.add(object.scale, 'x', 0, 20);
+        // gui.add(object.scale, 'y', 0, 20);
+        // gui.add(object.scale, 'z', 0, 20);
       });
-      //updateLoops(renderer, scene, camera)
-
-    }
-
-  });
-}
-var controls = new function () {
-  this.b = 1;
+    }});
 }
 
-gui.add(controls, 'b', 0, 20);
-var h;
-h += controls.b;
-tree(h);
+palmTree();
+
+//FirTree
+function FirTree(){
+  var firTreeDist = -110;
+  var mtlLoader = new THREE.MTLLoader();
+   mtlLoader.setTexturePath( "img/tree/" );
+   mtlLoader.setPath( "img/tree/" );
+  
+   mtlLoader.load("Fir_Tree.mtl", function(materials)
+   {
+     materials.preload();
+     var objLoader = new THREE.OBJLoader();
+     objLoader.setPath( "img/tree/" );
+     objLoader.setMaterials(materials);
+     for(i = 0; i < 12; i++){
+     objLoader.load("Fir_Tree.obj", function(object)
+     {
+      object.scale.x = object.scale.y = object.scale.z = 5;
+        object.position.z = -80;
+        object.position.x = firTreeDist;
+        object.position.y = 0;
+        object.children[0].name = "tree";
+        object.castShadow = true;
+        object.children[0].castShadow = true;
+        scene.add(object);
+        firTreeDist += 20;
+      });
+    }});
+  }
+  
+  FirTree();
 
 //tree(6);
 function updateLoops(renderer, scene, camera) {
@@ -94,7 +109,7 @@ mtlLoader.load("Oak_Tree.mtl", function (materials) {
       });
       object.scale.x = object.scale.y = object.scale.z = 5;
       object.position.z = oakTreeDist;
-      object.position.x = -95;
+      object.position.x = -120;
       object.children[0].name = "tree";
       object.castShadow = true;
       object.children[0].castShadow = true;
@@ -122,7 +137,7 @@ mtlLoader.load("Poplar_Tree.mtl", function (materials) {
 
       object.scale.x = object.scale.y = object.scale.z = 5;
       object.position.z = poplarTreeDist;
-      object.position.x = 95;
+      object.position.x = 120;
       object.children[0].name = "tree";
       object.castShadow = true;
       object.children[0].castShadow = true;

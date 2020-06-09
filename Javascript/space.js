@@ -21,9 +21,9 @@ function g() {
 		particleMat
 	);
     particleSystem.name = 'particleSystem';
-    particleSystem.scale.x = 30;
-    particleSystem.scale.y = 30;
-    particleSystem.scale.z = 30;
+    particleSystem.scale.x = 40;
+    particleSystem.scale.y = 40;
+    particleSystem.scale.z = 40;
 
 	scene.add(particleSystem);
 

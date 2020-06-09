@@ -13,7 +13,7 @@ function ParkGround(width, length, depth, widthSegments, heightSegments, depthSe
   var Material = new THREE.MeshFaceMaterial(floorMaterial)
 
   var floor = new THREE.Mesh(floorGeometry, Material);
-
+  floor.name = "Ground";
   floor.receiveShadow = true;
 
   return floor;

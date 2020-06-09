@@ -12,7 +12,7 @@ let lightningDecay = 1.7;
 var t = 0;
 
 function init() {
-  
+
   var ratio = window.innerWidth / window.innerHeight;
 
   scene = new THREE.Scene();
@@ -33,7 +33,7 @@ function init() {
   //Adds ambient light to the scene
   var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
   scene.add(ambientLight);
-  
+
   parkGround = new ParkGround(200, 0, 150, 40, 40, 40);
 
   scene.add(parkGround);
@@ -44,17 +44,17 @@ function init() {
   moon = new Moon(4);
   scene.add(moon);
 
-  var boxgeometry = new THREE.CubeGeometry(10, 10, 10);
-  var boxmaterial = new THREE.MeshLambertMaterial({
-    color: 0x0aeedf
-  });
-  var cube = new THREE.Mesh(boxgeometry, boxmaterial);
-  cube.castShadow = true;
-  cube.position.x = 0;
-  cube.position.y = 10;
-  cube.position.z = 0;
+  //var boxgeometry = new THREE.CubeGeometry(10, 10, 10);
+  //var boxmaterial = new THREE.MeshLambertMaterial({
+  //  color: 0x0aeedf
+  //});
+  //var cube = new THREE.Mesh(boxgeometry, boxmaterial);
+  //cube.castShadow = true;
+  //cube.position.x = 0;
+  //cube.position.y = 10;
+  //cube.position.z = 0;
 
-  scene.add(cube);
+  //scene.add(cube);
 
   // create a foglike atmosphere to the scene!
   scene.fog = new THREE.FogExp2(fogColour, fogDensity);
@@ -133,7 +133,60 @@ var onWindowResize = function () {
   camera.updateProjectionMatrix();
 };
 
+var raycaster = new THREE.Raycaster();
+var selectedObj = false;
+mesh = null;
+
+function onDocumentMouseDown(event) {
+  var mouse = new THREE.Vector2;
+  mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+  mouse.y = - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  var intersects = raycaster.intersectObjects(scene.children, true);
+
+  if (intersects.length > 0) {
+    console.log(intersects);
+    if (!selectedObj) {
+      for (var i of intersects) {
+        mesh = i.object;
+
+        if (mesh.name == "tree") {
+          console.log("Selected Tree!");
+          selectedObj = true;
+          break;
+        }
+        if (mesh.name == "cube") {
+          console.log("Selected Cuve!");
+          mesh.material.color = new THREE.Color(1, 0.5, 0.5);
+          selectedObj = true;
+          break;
+        }
+      }
+    }
+
+    if ((intersects[0].object.name == "Ground") && (selectedObj)) {
+      //mesh.material.color = new THREE.Color(0.9, 0.9, 0.9);
+      var pos = intersects[0].point;
+      console.log("Placed!");
+      console.log(pos);
+      if (mesh.name == "tree") {
+        mesh.parent.position.x = pos.x;
+        mesh.parent.position.z = pos.z;
+      } else if (mesh.name == "cube") {
+        mesh.position.x = pos.x;
+        mesh.position.z = pos.z;
+        mesh.material.color = new THREE.Color(0.9, 0.9, 0.9);
+      }
+      mesh = null;
+      selectedObj = false;
+    }
+  }
+}
+
 window.addEventListener('resize', onWindowResize, false);
+document.addEventListener('mousedown', onDocumentMouseDown, false);
 
 init();
 updateLoop();

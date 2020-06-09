@@ -1,4 +1,8 @@
 //var slider = document.getElementById("myRange");
+var randomPlacement = true;
+palmTreeNum = 9;
+oakTreeNum = 8;
+poplarTreeNum = 8;
 var geometry = new THREE.BoxGeometry(10, 10, 10);
 var material = new THREE.MeshBasicMaterial({ color: 'rgb(255, 255, 255)', });
 var cube = new THREE.Mesh(geometry, material);
@@ -25,17 +29,33 @@ function tree(s) {
     var objLoader = new THREE.OBJLoader();
     objLoader.setPath("img/tree/");
     objLoader.setMaterials(materials);
-    for (i = 0; i < 9; i++) {
+
+    if (randomPlacement) {
+      palmTreeNum = Math.floor((Math.random() * 9 + 3));
+    }
+
+    for (i = 0; i < palmTreeNum; i++) {
       objLoader.load("Palm_Tree.obj", function (object) {
         object.scale.x = object.scale.y = object.scale.z = 5;
-        object.position.z = 70;
-        object.position.x = palmTreeDist;
+
+        if (!randomPlacement) {
+          object.position.z = 70;
+          object.position.x = palmTreeDist;
+
+          palmTreeDist += 20;
+        } else {
+          // Random number between 0 and floor width/depth
+          xPos = Math.floor(Math.random() * (100 - -100 + 1)) + -100;
+          zPos = Math.floor(Math.random() * (75 - -75 + 1)) + -75;
+          object.position.z = zPos;
+          object.position.x = xPos;
+        }
+
         object.position.y = 0;
         object.children[0].name = "tree";
         object.castShadow = true;
         object.children[0].castShadow = true;
         scene.add(object);
-        palmTreeDist += 20;
 
         //return s;
         //var seperate = gui.addFolder('seperater');
@@ -83,7 +103,11 @@ mtlLoader.load("Oak_Tree.mtl", function (materials) {
   objLoader.setPath("img/tree/");
   objLoader.setMaterials(materials);
 
-  for (i = 0; i < 8; i++) {
+  if (randomPlacement) {
+    oakTreeNum = Math.floor((Math.random() * 8 + 3));
+  }
+
+  for (i = 0; i < oakTreeNum; i++) {
     objLoader.load("Oak_Tree.obj", function (object) {
       object.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
@@ -93,14 +117,26 @@ mtlLoader.load("Oak_Tree.mtl", function (materials) {
         }
       });
       object.scale.x = object.scale.y = object.scale.z = 5;
-      object.position.z = oakTreeDist;
-      object.position.x = -95;
+
+
+      if (!randomPlacement) {
+        object.position.z = oakTreeDist;
+        object.position.x = -95;
+
+        oakTreeDist += 20;
+      } else {
+        // Random number between 0 and floor width/depth
+        xPos = Math.floor(Math.random() * (100 - -100 + 1)) + -100;
+        zPos = Math.floor(Math.random() * (75 - -75 + 1)) + -75;
+
+        object.position.z = zPos;
+        object.position.x = xPos;
+      }
+
       object.children[0].name = "tree";
       object.castShadow = true;
       object.children[0].castShadow = true;
       scene.add(object);
-      oakTreeDist += 20;
-
     });
   }
 });
@@ -117,17 +153,36 @@ mtlLoader.load("Poplar_Tree.mtl", function (materials) {
   objLoader.setPath("img/tree/");
   objLoader.setMaterials(materials);
 
-  for (i = 0; i < 8; i++) {
-    objLoader.load("Poplar_Tree.obj", function (object) {
+  if (randomPlacement) {
+    poplarTreeNum = Math.floor((Math.random() * 8 + 3));
+  }
 
+  for (i = 0; i < poplarTreeNum; i++) {
+    objLoader.load("Poplar_Tree.obj", function (object) {
       object.scale.x = object.scale.y = object.scale.z = 5;
-      object.position.z = poplarTreeDist;
-      object.position.x = 95;
+
+      if (!randomPlacement) {
+        object.position.z = poplarTreeDist;
+        object.position.x = 95;
+
+        poplarTreeDist += 20;
+      } else {
+        // Random number between 0 and floor width/depth
+        xPos = Math.floor(Math.random() * (100 - -100 + 1)) + -100;
+        zPos = Math.floor(Math.random() * (75 - -75 + 1)) + -75;
+
+        object.position.z = zPos;
+        object.position.x = xPos;
+      }
+
       object.children[0].name = "tree";
       object.castShadow = true;
       object.children[0].castShadow = true;
       scene.add(object);
-      poplarTreeDist += 20;
     });
   }
 });
+
+function checkCollision(vector) {
+
+}

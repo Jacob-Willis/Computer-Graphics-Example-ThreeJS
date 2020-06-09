@@ -44,18 +44,6 @@ function init() {
   moon = new Moon(4);
   scene.add(moon);
 
-  //var boxgeometry = new THREE.CubeGeometry(10, 10, 10);
-  //var boxmaterial = new THREE.MeshLambertMaterial({
-  //  color: 0x0aeedf
-  //});
-  //var cube = new THREE.Mesh(boxgeometry, boxmaterial);
-  //cube.castShadow = true;
-  //cube.position.x = 0;
-  //cube.position.y = 10;
-  //cube.position.z = 0;
-
-  //scene.add(cube);
-
   // create a foglike atmosphere to the scene!
   scene.fog = new THREE.FogExp2(fogColour, fogDensity);
   renderer.setClearColor(scene.fog.color);

@@ -14,6 +14,9 @@ var snow = 0.1;
 var sunDiameter = 200;
 var moonDiameter  = 150;
 var t = 0;
+var groundX = 250;
+var groundZ = 170;
+
 parameters = {
   b: true,
   c: false,
@@ -56,7 +59,7 @@ function init() {
   var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
   scene.add(ambientLight);
 
-  parkGround = new ParkGround(250, 0, 170, 40, 40, 40);
+  parkGround = new ParkGround(groundX, 0, groundZ, 40, 40, 40);
 
   scene.add(parkGround);
 
@@ -185,7 +188,6 @@ function onDocumentMouseDown(event) {
   var intersects = raycaster.intersectObjects(scene.children, true);
 
   if (intersects.length > 0) {
-    console.log(intersects);
     if (!selectedObj) {
       for (var i of intersects) {
         mesh = i.object;
@@ -196,7 +198,7 @@ function onDocumentMouseDown(event) {
           break;
         }
         if (mesh.name == "cube") {
-          console.log("Selected Cuve!");
+          console.log("Selected Cube!");
           mesh.material.color = new THREE.Color(1, 0.5, 0.5);
           selectedObj = true;
           break;
@@ -208,7 +210,6 @@ function onDocumentMouseDown(event) {
       //mesh.material.color = new THREE.Color(0.9, 0.9, 0.9);
       var pos = intersects[0].point;
       console.log("Placed!");
-      console.log(pos);
       if (mesh.name == "tree") {
         mesh.parent.position.x = pos.x;
         mesh.parent.position.z = pos.z;

@@ -14,6 +14,8 @@ var snow = 0.1;
 var sunDiameter = 200;
 var moonDiameter  = 150;
 var t = 0;
+var groundX = 250;
+var groundZ = 170;
 
 parameters = {
   b: true,
@@ -57,7 +59,7 @@ function init() {
   var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.3);
   scene.add(ambientLight);
 
-  parkGround = new ParkGround(250, 0, 170, 40, 40, 40);
+  parkGround = new ParkGround(groundX, 0, groundZ, 40, 40, 40);
 
   scene.add(parkGround);
 

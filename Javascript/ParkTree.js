@@ -1,9 +1,11 @@
 //var slider = document.getElementById("myRange");
-var randomPlacement = true;
+var randomPlacement = false;
 palmTreeNum = 12;
 firTreeNum = 12;
 oakTreeNum = 8;
 poplarTreeNum = 8;
+groundXLength = 250 / 2;
+groundZLength = 170 / 2;
 var geometry = new THREE.BoxGeometry(10, 10, 10);
 var material = new THREE.MeshBasicMaterial({ color: 'rgb(255, 255, 255)', });
 var cube = new THREE.Mesh(geometry, material);
@@ -29,6 +31,7 @@ deleteTree.onChange(function () {
     mesh = null;
   } else {
     console.log("No tree selected");
+    alert("No tree selected");
   }
 })
 
@@ -48,8 +51,8 @@ addPalmTree.onChange(function () {
       object.scale.x = object.scale.y = object.scale.z = 5;
 
       // Random number between 0 and floor width/depth
-      xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-      zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
+      xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+      zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
       console.log(moonDiameter);
 
       object.position.z = zPos;
@@ -84,8 +87,8 @@ addOakTree.onChange(function () {
       object.scale.x = object.scale.y = object.scale.z = 5;
 
       // Random number between 0 and floor width/depth
-      xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-      zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
+      xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+      zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
 
       object.position.z = zPos;
       object.position.x = xPos;
@@ -112,8 +115,8 @@ addPoplarTree.onChange(function () {
 
 
       // Random number between 0 and floor width/depth
-      xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-      zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
+      xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+      zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
 
       object.position.z = zPos;
       object.position.x = xPos;
@@ -139,8 +142,8 @@ addFirTree.onChange(function () {
       object.scale.x = object.scale.y = object.scale.z = 5;
 
       // Random number between 0 and floor width/depth
-      xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-      zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
+      xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+      zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
 
       object.position.z = zPos;
       object.position.x = xPos;
@@ -168,6 +171,8 @@ function palmTree() {
 
     if (randomPlacement) {
       palmTreeNum = Math.floor((Math.random() * palmTreeNum + 3));
+    } else {
+      palmTreeNum = 12;
     }
 
     for (i = 0; i < palmTreeNum; i++) {
@@ -181,8 +186,8 @@ function palmTree() {
           palmTreeDist += 20;
         } else {
           // Random number between 0 and floor width/depth
-          xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-          zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
+          xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+          zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
           object.position.z = zPos;
           object.position.x = xPos;
         }
@@ -204,10 +209,8 @@ function palmTree() {
   });
 }
 
-palmTree();
-
 //FirTree
-function FirTree() {
+function firTree() {
   var firTreeDist = -110;
   var mtlLoader = new THREE.MTLLoader();
   mtlLoader.setTexturePath("img/tree/");
@@ -221,6 +224,8 @@ function FirTree() {
 
     if (randomPlacement) {
       firTreeNum = Math.floor((Math.random() * firTreeNum + 3));
+    } else {
+      firTreeNum = 12;
     }
 
     for (i = 0; i < firTreeNum; i++) {
@@ -234,8 +239,8 @@ function FirTree() {
           firTreeDist += 20;
         } else {
           // Random number between 0 and floor width/depth
-          xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-          zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
+          xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+          zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
 
           object.position.z = zPos;
           object.position.x = xPos;
@@ -250,8 +255,6 @@ function FirTree() {
   });
 }
 
-FirTree();
-
 //tree(6);
 function updateLoops(renderer, scene, camera) {
   renderer.render(scene, camera);
@@ -264,93 +267,128 @@ function updateLoops(renderer, scene, camera) {
 }
 //updateLoops();
 //Oak trees
-var oakTreeDist = -70;
-var mtlLoader = new THREE.MTLLoader();
-mtlLoader.setTexturePath("img/tree/");
-mtlLoader.setPath("img/tree/");
+function oakTree() {
+  var oakTreeDist = -70;
+  var mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setTexturePath("img/tree/");
+  mtlLoader.setPath("img/tree/");
 
-mtlLoader.load("Oak_Tree.mtl", function (materials) {
-  materials.preload();
-  var objLoader = new THREE.OBJLoader();
-  objLoader.setPath("img/tree/");
-  objLoader.setMaterials(materials);
+  mtlLoader.load("Oak_Tree.mtl", function (materials) {
+    materials.preload();
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setPath("img/tree/");
+    objLoader.setMaterials(materials);
 
-  if (randomPlacement) {
-    oakTreeNum = Math.floor((Math.random() * oakTreeNum + 3));
-  }
+    if (randomPlacement) {
+      oakTreeNum = Math.floor((Math.random() * oakTreeNum + 3));
+    } else {
+      oakTreeNum = 8;
+    }
 
-  for (i = 0; i < oakTreeNum; i++) {
-    objLoader.load("Oak_Tree.obj", function (object) {
-      object.traverse(function (child) {
-        if (child instanceof THREE.Mesh) {
-          var mygeometry = new THREE.Geometry().fromBufferGeometry(child.geometry);
-          mygeometry.computeBoundingBox();
-          child.material.color = new THREE.Color(1, 0, 0);
+    for (i = 0; i < oakTreeNum; i++) {
+      objLoader.load("Oak_Tree.obj", function (object) {
+        object.traverse(function (child) {
+          if (child instanceof THREE.Mesh) {
+            var mygeometry = new THREE.Geometry().fromBufferGeometry(child.geometry);
+            mygeometry.computeBoundingBox();
+            child.material.color = new THREE.Color(1, 0, 0);
+          }
+        });
+        object.scale.x = object.scale.y = object.scale.z = 5;
+
+
+        if (!randomPlacement) {
+          object.position.z = oakTreeDist;
+          object.position.x = -120;
+
+          oakTreeDist += 20;
+        } else {
+          // Random number between 0 and floor width/depth
+          xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+          zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
+
+          object.position.z = zPos;
+          object.position.x = xPos;
         }
+
+        object.children[0].name = "tree";
+        object.castShadow = true;
+        object.children[0].castShadow = true;
+        scene.add(object);
       });
-      object.scale.x = object.scale.y = object.scale.z = 5;
+    }
+  });
+}
+
+function poplarTree() {
+  // Poplar trees
+  var poplarTreeDist = -70;
+  var mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setTexturePath("img/tree/");
+  mtlLoader.setPath("img/tree/");
+
+  mtlLoader.load("Poplar_Tree.mtl", function (materials) {
+    materials.preload();
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setPath("img/tree/");
+    objLoader.setMaterials(materials);
+
+    if (randomPlacement) {
+      poplarTreeNum = Math.floor((Math.random() * 8 + 3));
+    } else {
+      poplarTreeNum = 8;
+    }
+
+    for (i = 0; i < poplarTreeNum; i++) {
+      objLoader.load("Poplar_Tree.obj", function (object) {
+        object.scale.x = object.scale.y = object.scale.z = 5;
+
+        if (!randomPlacement) {
+          object.position.z = poplarTreeDist;
+          object.position.x = 120;
+
+          poplarTreeDist += 20;
+        } else {
+          // Random number between 0 and floor width/depth
+          xPos = Math.floor(Math.random() * (groundXLength - -groundXLength + 1)) + -groundXLength;
+          zPos = Math.floor(Math.random() * (groundZLength - -groundZLength + 1)) + -groundZLength;
+
+          object.position.z = zPos;
+          object.position.x = xPos;
+        }
+
+        object.children[0].name = "tree";
+        object.castShadow = true;
+        object.children[0].castShadow = true;
+        scene.add(object);
+      });
+    }
+  });
+}
+
+function reloadTrees() {
+  palmTree();
+  firTree();
+  oakTree();
+  poplarTree();
+}
+
+reloadTrees();
 
 
-      if (!randomPlacement) {
-        object.position.z = oakTreeDist;
-        object.position.x = -120;
+var rand = gui.add(parameters, 'c').name('Randomise Trees');
+rand.onChange(function (jar) {
+  randomPlacement = jar;
+  console.log(randomPlacement);
+})
 
-        oakTreeDist += 20;
-      } else {
-        // Random number between 0 and floor width/depth
-        xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-        zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
-
-        object.position.z = zPos;
-        object.position.x = xPos;
-      }
-
-      object.children[0].name = "tree";
-      object.castShadow = true;
-      object.children[0].castShadow = true;
-      scene.add(object);
-    });
+var reload = { reloadBtn: function () { } };
+var reloadBtn = gui.add(reload, 'reloadBtn').name('Reload Trees');
+reloadBtn.onChange(function () {
+  for (let i = scene.children.length - 1; i >= 0; i--) {
+    if ((scene.children[i].children.length > 0) && (scene.children[i].children[0].name == "tree")) {
+      scene.remove(scene.children[i]);
+    }
   }
-});
-
-// Poplar trees
-var poplarTreeDist = -70;
-var mtlLoader = new THREE.MTLLoader();
-mtlLoader.setTexturePath("img/tree/");
-mtlLoader.setPath("img/tree/");
-
-mtlLoader.load("Poplar_Tree.mtl", function (materials) {
-  materials.preload();
-  var objLoader = new THREE.OBJLoader();
-  objLoader.setPath("img/tree/");
-  objLoader.setMaterials(materials);
-
-  if (randomPlacement) {
-    poplarTreeNum = Math.floor((Math.random() * 8 + 3));
-  }
-
-  for (i = 0; i < poplarTreeNum; i++) {
-    objLoader.load("Poplar_Tree.obj", function (object) {
-      object.scale.x = object.scale.y = object.scale.z = 5;
-
-      if (!randomPlacement) {
-        object.position.z = poplarTreeDist;
-        object.position.x = 120;
-
-        poplarTreeDist += 20;
-      } else {
-        // Random number between 0 and floor width/depth
-        xPos = Math.floor(Math.random() * (250/2 - -250/2 + 1)) + -250/2;
-        zPos = Math.floor(Math.random() * (170/2 - -170/2 + 1)) + -170/2;
-
-        object.position.z = zPos;
-        object.position.x = xPos;
-      }
-
-      object.children[0].name = "tree";
-      object.castShadow = true;
-      object.children[0].castShadow = true;
-      scene.add(object);
-    });
-  }
+  reloadTrees();
 });

@@ -367,10 +367,18 @@ function poplarTree() {
 }
 
 function reloadTrees() {
+  var ground = scene.getObjectByName("Ground");
+  groundXLength = (250 / 2) * ground.scale.x;
+  groundZLength = (170 / 2) * ground.scale.z;
+  console.log(ground);
+
   palmTree();
   firTree();
   oakTree();
   poplarTree();
+  //groundXLength = 250 / 2;
+  //groundZLength = 170 / 2;
+
 }
 
 reloadTrees();

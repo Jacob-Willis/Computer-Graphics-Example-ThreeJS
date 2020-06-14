@@ -11,9 +11,9 @@ groundZLength = 170 / 2;
 var geometry = new THREE.BoxGeometry(10, 10, 10);
 var material = new THREE.MeshBasicMaterial({ color: 'rgb(255, 255, 255)', });
 
-//import vertexShaderDiffuseLightSource from './vertexShaderDiffuseLight.js';
-
-material_cube = loadCubeShaders();
+var material_cube = new THREE.ShaderMaterial();
+material_cube.vertexShader = vertexShaderSimpleSource;
+material_cube.fragmentShader = fragmentShaderSimpleSource;
 
 var cube = new THREE.Mesh(geometry, material_cube);
 cube.position.y = 10;
@@ -21,6 +21,7 @@ cube.castShadow = true;
 cube.recieveShadow = true;
 cube.name = "cube";
 scene.add(cube);
+
 
 var Size = gui.addFolder('Add and delete trees');
 
@@ -161,30 +162,6 @@ addFirTree.onChange(function () {
     });
   });
 })
-
-function loadCubeShaders() {
-  var material_cube = new THREE.ShaderMaterial();
-  //material_cube.vertexShader = document.getElementById('vertexShaderDiffuseLight').textContent;
-  //material_cube.fragmentShader = document.getElementById('fragmentInterpColor').textContent;
-  var gl = renderer.getContext();
-  console.log(THREE);
-  var glVertexShader = new THREE.WebGLShader(gl, gl.VERTEX_SHADER, vertexShaderDiffuseLight);
-  var glFragmentShader = new THREE.WebGLShader(gl, gl.FRAGMENT_SHADER, fragmentInterpColor);
-  var program = gl.createProgram();
-  var fragmentInterpColor = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(fragmentInterpColor, fragmentInterpColorSource);
-  gl.compileShader(fragmentInterpColor);
-  gl.attachShader(program, fragmentInterpColor);
-  var vertexShaderDiffuseLight = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vertexShaderDiffuseLight, vertexShaderDiffuseLightSource);
-  gl.compileShader(vertexShaderDiffuseLight);
-  gl.attachShader(program, vertexShaderDiffuseLight);
-
-  material_cube.vertexShader = glVertexShader;
-  material_cube.fragmentShader = glFragmentShader;
-
-  return material_cube;
-}
 
 //palm tree
 function palmTree() {

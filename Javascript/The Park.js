@@ -12,7 +12,7 @@ let lightningDecay = 1.7;
 var isSnow = false;
 var snow = 0.1;
 var sunDiameter = 200;
-var moonDiameter  = 150;
+var moonDiameter = 150;
 var t = 0;
 var groundX = 250;
 var groundZ = 170;
@@ -53,7 +53,7 @@ var scale = gui.addFolder('Sun and Moon Scale');
 scale.open();
 
 function init() {
-  
+
   var ratio = window.innerWidth / window.innerHeight;
 
   scene = new THREE.Scene();
@@ -89,7 +89,7 @@ function init() {
   model.onChange(function(jar){
     sun.visible = jar;
   })
-  
+
   moon = new Moon(8);
   scene.add(moon);
 
@@ -103,6 +103,7 @@ function init() {
   scene.fog = new THREE.FogExp2(fogColour, fogDensity);
   renderer.setClearColor(scene.fog.color);
 
+  // adds clouds to scene
   cloud = new Clouds(cloudCount);
 
   //adds lightning to clouds
@@ -123,6 +124,7 @@ function init() {
   })
   
   visibility.open();
+  compileShaders();
 }
 
 function updateLoop() {
@@ -247,4 +249,4 @@ init();
 updateLoop();
 
 //Orbit contorls
-controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls = new THREE.OrbitControls(camera, renderer.domElement);

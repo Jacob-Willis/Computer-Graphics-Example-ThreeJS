@@ -12,7 +12,7 @@ let lightningDecay = 1.7;
 var isSnow = false;
 var snow = 0.1;
 var sunDiameter = 200;
-var moonDiameter  = 150;
+var moonDiameter = 150;
 var t = 0;
 var groundX = 250;
 var groundZ = 170;
@@ -25,19 +25,19 @@ parameters = {
 }
 
 var Size = gui.addFolder('Sun and Moon diameter');
- var h = Size.add(parameters, 'Sun', 200, 300);
- h.onChange(function(jar){
+var h = Size.add(parameters, 'Sun', 200, 300);
+h.onChange(function (jar) {
   sunDiameter = jar;
 })
 
 var h = Size.add(parameters, 'Moon', 150, 250);
- h.onChange(function(jar){
+h.onChange(function (jar) {
   moonDiameter = jar;
 })
 Size.open();
 
 function init() {
-  
+
   var ratio = window.innerWidth / window.innerHeight;
 
   scene = new THREE.Scene();
@@ -65,19 +65,19 @@ function init() {
 
   sun = new Sun(12);
   scene.add(sun);
-  
+
   //change sun visability
   var model = gui.add(parameters, 'b').name('Sun visible');
-  model.onChange(function(jar){
+  model.onChange(function (jar) {
     sun.visible = jar;
   })
-  
+
   moon = new Moon(8);
   scene.add(moon);
 
   //change moon visibility
   var model = gui.add(parameters, 'b').name('Moon visible');
-  model.onChange(function(jar){
+  model.onChange(function (jar) {
     moon.visible = jar;
   })
 
@@ -85,13 +85,8 @@ function init() {
   scene.fog = new THREE.FogExp2(fogColour, fogDensity);
   renderer.setClearColor(scene.fog.color);
 
-  // adds clouds to scene, change visibility
-  // var model = gui.add(parameters, 'c').name('cloud visible');
-  // model.onChange(function(jar){
-  //   if(jar){
-    cloud = new Clouds(cloudCount);
-  //   }
-  // })
+  // adds clouds to scene
+  cloud = new Clouds(cloudCount);
 
   //adds lightning to clouds
   lightning = new Lightning(lightningColour, lightningIntensity, lightningDecay);
@@ -99,16 +94,17 @@ function init() {
   //Adds rain, change visibility
   rain = new Rain(rainCount, rainColour, rainSize);
   var model = gui.add(parameters, 'b').name('Rain visible');
-  model.onChange(function(jar){
+  model.onChange(function (jar) {
     rain.visible = jar;
   })
 
   //Change weather to snowor rain
   var model = gui.add(parameters, 'c').name('Snow');
-  model.onChange(function(jar){
-    if(jar == true){ snow = 0.0003}
-    if(jar == false) {snow = 0.01}
+  model.onChange(function (jar) {
+    if (jar == true) { snow = 0.0003 }
+    if (jar == false) { snow = 0.01 }
   })
+  compileShaders();
 }
 
 function updateLoop() {
@@ -231,4 +227,4 @@ init();
 updateLoop();
 
 //Orbit contorls
-controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls = new THREE.OrbitControls(camera, renderer.domElement);

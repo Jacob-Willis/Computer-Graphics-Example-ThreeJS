@@ -34,11 +34,5 @@ function Moon(radius) {
   moonGroup.add(sphere);
   moonGroup.add(light);
 
-  var Size = gui.addFolder('Moon size');
-  Size.add(moonGroup.scale, 'x', 1, 4);
-  Size.add(moonGroup.scale, 'z', 1, 4);
-  Size.add(moonGroup.scale, 'y', 1, 4);
-  Size.open();
-
   return moonGroup;
 }

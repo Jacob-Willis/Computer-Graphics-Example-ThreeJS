@@ -16,25 +16,41 @@ var moonDiameter  = 150;
 var t = 0;
 var groundX = 250;
 var groundZ = 170;
+var sunSize = 1;
+var moonSize = 0.7;
 
 parameters = {
   b: true,
   c: false,
   Sun: 200,
-  Moon: 150
+  Moon: 150,
+  sunS: 1,
+  moonS: 0.7,
 }
 
-var Size = gui.addFolder('Sun and Moon diameter');
- var h = Size.add(parameters, 'Sun', 200, 300);
+var diameter = gui.addFolder('Sun and Moon diameter');
+ var h = diameter.add(parameters, 'Sun', 200, 300);
  h.onChange(function(jar){
   sunDiameter = jar;
 })
 
-var h = Size.add(parameters, 'Moon', 150, 250);
+var h = diameter.add(parameters, 'Moon', 150, 250);
  h.onChange(function(jar){
   moonDiameter = jar;
 })
-Size.open();
+diameter.open();
+
+var scale = gui.addFolder('Sun and Moon Scale');
+ var h = scale.add(parameters, 'sunS', 1, 5);
+ h.onChange(function(jar){
+  sunSize = jar;
+})
+
+ var h = scale.add(parameters, 'moonS', 0.7, 5);
+ h.onChange(function(jar){
+  moonSize = jar;
+})
+scale.open();
 
 function init() {
   
@@ -65,9 +81,11 @@ function init() {
 
   sun = new Sun(12);
   scene.add(sun);
-  
+
+  var visibility = gui.addFolder('Object Visibility');
+
   //change sun visability
-  var model = gui.add(parameters, 'b').name('Sun visible');
+  var model = visibility.add(parameters, 'b').name('Sun visible');
   model.onChange(function(jar){
     sun.visible = jar;
   })
@@ -76,7 +94,7 @@ function init() {
   scene.add(moon);
 
   //change moon visibility
-  var model = gui.add(parameters, 'b').name('Moon visible');
+  var model = visibility.add(parameters, 'b').name('Moon visible');
   model.onChange(function(jar){
     moon.visible = jar;
   })
@@ -85,30 +103,26 @@ function init() {
   scene.fog = new THREE.FogExp2(fogColour, fogDensity);
   renderer.setClearColor(scene.fog.color);
 
-  // adds clouds to scene, change visibility
-  // var model = gui.add(parameters, 'c').name('cloud visible');
-  // model.onChange(function(jar){
-  //   if(jar){
-    cloud = new Clouds(cloudCount);
-  //   }
-  // })
+  cloud = new Clouds(cloudCount);
 
   //adds lightning to clouds
   lightning = new Lightning(lightningColour, lightningIntensity, lightningDecay);
-
+  
   //Adds rain, change visibility
   rain = new Rain(rainCount, rainColour, rainSize);
-  var model = gui.add(parameters, 'b').name('Rain visible');
+  var model = visibility.add(parameters, 'b').name('Rain visible');
   model.onChange(function(jar){
     rain.visible = jar;
   })
 
   //Change weather to snowor rain
-  var model = gui.add(parameters, 'c').name('Snow');
+  var model = visibility.add(parameters, 'c').name('Snow');
   model.onChange(function(jar){
     if(jar == true){ snow = 0.0003}
     if(jar == false) {snow = 0.01}
   })
+  
+  visibility.open();
 }
 
 function updateLoop() {
@@ -150,6 +164,7 @@ function animateSun() {
   var speedMultiplyer = 0.7;
   var diameter = sunDiameter;
 
+  sun.scale.x = sun.scale.y = sun.scale.z = sunSize;
   sun.rotation.z += 0.01;
   sun.position.x = diameter * Math.cos(t * speedMultiplyer) + 0;
   sun.position.y = diameter * Math.sin(t * speedMultiplyer) + 0;
@@ -160,6 +175,7 @@ function animateMoon() {
   var speedMultiplyer = 1.0;
   var radius = moonDiameter;
 
+  moon.scale.x = moon.scale.y = moon.scale.z = moonSize;
   moon.rotation.z += 0.01;
   moon.position.x = radius * Math.cos(t * speedMultiplyer) + 0;
   moon.position.y = radius * Math.sin(t * speedMultiplyer) + 0;

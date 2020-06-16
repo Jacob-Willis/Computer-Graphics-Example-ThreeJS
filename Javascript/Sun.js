@@ -31,11 +31,5 @@ function Sun(radius) {
   sunGroup.add(sphere);
   sunGroup.add(light);
 
-  var Size = gui.addFolder('Sun size');
-  Size.add(sunGroup.scale, 'x', 1, 6);
-  Size.add(sunGroup.scale, 'z', 1, 6);
-  Size.add(sunGroup.scale, 'y', 1, 6);
-  Size.open();
-
   return sunGroup;
 }

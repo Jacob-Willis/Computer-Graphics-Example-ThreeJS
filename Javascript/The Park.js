@@ -1,9 +1,13 @@
 let scene, camera, renderer;
 let cloudParticles = [];
 let cloudCount = 25;
-let rainCount = 15000;
+let rainCount = 4000;
 let rainColour = 0xaaaaaa;
-var rainSize = 0.6;
+var rainSize = 5.0;
+let snowCount = 1000;
+let snowColour = 0xF0F8FF;
+var snowSize = 10.0;
+var showRain = true;
 let fogColour = 0x11111f;
 let fogDensity = 0.002;
 let lightningColour = 0x062d89;
@@ -86,7 +90,7 @@ function init() {
 
   //change sun visability
   var model = visibility.add(parameters, 'b').name('Sun visible');
-  model.onChange(function(jar){
+  model.onChange(function (jar) {
     sun.visible = jar;
   })
 
@@ -95,7 +99,7 @@ function init() {
 
   //change moon visibility
   var model = visibility.add(parameters, 'b').name('Moon visible');
-  model.onChange(function(jar){
+  model.onChange(function (jar) {
     moon.visible = jar;
   })
 
@@ -108,27 +112,41 @@ function init() {
 
   //adds lightning to clouds
   lightning = new Lightning(lightningColour, lightningIntensity, lightningDecay);
-  
+
   //Adds rain, change visibility
   rain = new Rain(rainCount, rainColour, rainSize);
+  rainObj.name = "rain";
+// Toggle for if rain/snow is visible
   var model = visibility.add(parameters, 'b').name('Rain visible');
-  model.onChange(function(jar){
-    rain.visible = jar;
+  model.onChange(function (jar) {
+    showRain = jar;
+    rainObj.visible = showRain;
   })
 
-  //Change weather to snowor rain
+  ////Change weather to snow or rain
   var model = visibility.add(parameters, 'c').name('Snow');
-  model.onChange(function(jar){
-    if(jar == true){ snow = 0.0003}
-    if(jar == false) {snow = 0.01}
+  model.onChange(function (jar) {
+    if (jar == true) {
+      scene.remove(rainObj);
+      rain = new Rain(snowCount, snowColour, snowSize);
+      rainObj.name = "snow";
+    }
+    if (jar == false) {
+      scene.remove(rainObj);
+      rain = new Rain(rainCount, rainColour, rainSize);
+      rainObj.name = "rain";
+    }
+    rainObj.visible = showRain;
   })
-  
+
   visibility.open();
+
+  //Compiles the shaders that we are using in the simulation
   compileShaders();
 }
 
 function updateLoop() {
-  t += 0.01;
+  t = Date.now() * 0.005;
 
   animateSun();
   animateMoon();
@@ -136,16 +154,43 @@ function updateLoop() {
   cloudParticles.forEach(p => {
     p.rotation.z -= 0.002;
   });
-  rainGeo.vertices.forEach(p => {
-    p.velocity -= snow + Math.random() * snow;
-    p.y += p.velocity;
-    if (p.y < -200) {
-      p.y = 200;
-      p.velocity = 0;
+  // animate the rain to fall:
+  var geometry = rainObj.geometry;
+  var attributes = geometry.attributes;
+  for (var i = 1; i < attributes.position.array.length; i += 3) {
+    if (rainObj.name == "rain") {
+      if (attributes.position.array[i] < 0) {
+        attributes.position.array[i] = 200;
+      } else {
+        attributes.position.array[i] += -2;
+      }
     }
-  });
-  rainGeo.verticesNeedUpdate = true;
-  rain.rotation.y += 0.002;
+    else if (rainObj.name == "snow") {
+      attributes.position.array[i - 1] += (Math.random() - 1) * 0.5;
+      attributes.position.array[i] += (Math.random() - 0.75) * 1;
+      attributes.position.array[i + 1] += (Math.random()) * 0.5;
+
+      if (attributes.position.array[i - 1] < -280) {
+        attributes.position.array[i - 1] = 280;
+      }
+
+      if (attributes.position.array[i] < 0) {
+        attributes.position.array[i]= 200;
+      }
+
+      if (attributes.position.array[i + 1] < -280) {
+        attributes.position.array[i + 1] = 280;
+      }
+
+      if (attributes.position.array[i + 1] > 280) {
+        attributes.position.array[i + 1] = -280;
+      }
+    }
+  }
+
+  attributes.position.needsUpdate = true;
+
+
   if (Math.random() > 0.93 || flash.power > 100) {
     if (flash.power < 100)
       flash.position.set(
@@ -163,7 +208,7 @@ function updateLoop() {
 
 function animateSun() {
   // Animation speed multiplier
-  var speedMultiplyer = 0.7;
+  var speedMultiplyer = 0.07;
   var diameter = sunDiameter;
 
   sun.scale.x = sun.scale.y = sun.scale.z = sunSize;
@@ -174,7 +219,7 @@ function animateSun() {
 
 function animateMoon() {
   // Animation speed multiplier
-  var speedMultiplyer = 1.0;
+  var speedMultiplyer = 0.1;
   var radius = moonDiameter;
 
   moon.scale.x = moon.scale.y = moon.scale.z = moonSize;

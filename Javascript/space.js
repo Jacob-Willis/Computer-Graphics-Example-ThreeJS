@@ -1,19 +1,19 @@
 function g() {
 	var particleMat = new THREE.PointsMaterial({
 		color: 'rgb(255, 255, 255)',
-		size: 4,
+		size: 8,
 		map: new THREE.TextureLoader().load('/img/particle.jpg'),
 		transparent: true,
 		blending: THREE.AdditiveBlending,
 		depthWrite: false
 	});
 
-	var particleGeo = new THREE.SphereGeometry(10, 64, 64);
+	var particleGeo = new THREE.SphereGeometry(20, 128, 128);
 
 	particleGeo.vertices.forEach(function(vertex) {
 		vertex.x += (Math.random() - 0.5);
 		vertex.y += (Math.random() - 0.5);
-		vertex.z += (Math.random() - 0.5);
+    vertex.z += (Math.random() - 0.5);
 	});
 
 	var particleSystem = new THREE.Points(
@@ -43,7 +43,9 @@ function update(renderer, scene, camera, controls) {
 	renderer.render(scene, camera);
 
 	var particleSystem = scene.getObjectByName('particleSystem');
-	particleSystem.rotation.y += 0.0008;
+  particleSystem.rotation.x += 0.0008;
+  particleSystem.rotation.y += 0.0008;
+  particleSystem.rotation.z += 0.0008;
 	
 	requestAnimationFrame(function() {
 		update(renderer, scene, camera, controls);

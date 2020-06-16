@@ -11,11 +11,7 @@ groundZLength = 170 / 2;
 var geometry = new THREE.BoxGeometry(10, 10, 10);
 var material = new THREE.MeshBasicMaterial({ color: 'rgb(255, 255, 255)', });
 
-var material_cube = new THREE.ShaderMaterial();
-material_cube.vertexShader = vertexShaderSimpleSource;
-material_cube.fragmentShader = fragmentShaderSimpleSource;
-
-var cube = new THREE.Mesh(geometry, material_cube);
+var cube = new THREE.Mesh(geometry, material);
 cube.position.y = 10;
 cube.castShadow = true;
 cube.recieveShadow = true;
@@ -377,15 +373,11 @@ function reloadTrees() {
   var ground = scene.getObjectByName("Ground");
   groundXLength = (250 / 2) * ground.scale.x;
   groundZLength = (170 / 2) * ground.scale.z;
-  console.log(ground);
 
   palmTree();
   firTree();
   oakTree();
   poplarTree();
-  //groundXLength = 250 / 2;
-  //groundZLength = 170 / 2;
-
 }
 
 reloadTrees();

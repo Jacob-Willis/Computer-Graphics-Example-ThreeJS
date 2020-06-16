@@ -6,15 +6,18 @@ oakTreeNum = 8;
 poplarTreeNum = 8;
 groundXLength = 250 / 2;
 groundZLength = 170 / 2;
+// var mtlLoader = new THREE.MTLLoader();
+
 var geometry = new THREE.BoxGeometry(10, 10, 10);
 var material = new THREE.MeshBasicMaterial({ color: 'rgb(255, 255, 255)', });
+
 var cube = new THREE.Mesh(geometry, material);
 cube.position.y = 10;
 cube.castShadow = true;
 cube.recieveShadow = true;
-var mtlLoader = new THREE.MTLLoader();
 cube.name = "cube";
 scene.add(cube);
+
 
 var Size = gui.addFolder('Add and delete trees');
 
@@ -370,15 +373,11 @@ function reloadTrees() {
   var ground = scene.getObjectByName("Ground");
   groundXLength = (250 / 2) * ground.scale.x;
   groundZLength = (170 / 2) * ground.scale.z;
-  console.log(ground);
 
   palmTree();
   firTree();
   oakTree();
   poplarTree();
-  //groundXLength = 250 / 2;
-  //groundZLength = 170 / 2;
-
 }
 
 reloadTrees();

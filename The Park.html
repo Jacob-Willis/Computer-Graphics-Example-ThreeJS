@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>The Park</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 
@@ -16,45 +16,51 @@
   }
 
   .slider {
-  -webkit-appearance: none;
-  width: 20%;
-  height: 25px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
+    -webkit-appearance: none;
+    width: 20%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
 
-.slider:hover {
-  opacity: 1;
-}
+    .slider:hover {
+      opacity: 1;
+    }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-}
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+    }
 
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-}
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+    }
 </style>
 <body>
-  
+
   <!--include the three.js library-->
   <script src="js/three.js"></script>
   <script src="js/PLYLoader.js"></script>
   <script src="js/OBJLoader.js"></script>
   <script src="js/MTLLoader.js"></script>
-  <script src="js/OrbitControls.js"> </script>
+  <script src="js/OrbitControls.js"></script>
   <script src="/js/dat.gui.min.js"></script>
+
+  <!-- Shaders -->
+  <script src="Javascript/vertexShaderSimple.js"></script>
+  <script src="Javascript/fragmentShaderSimple.js"></script>
+
+  <script src="Javascript/compileShaders.js"></script>
 
   <script src="Javascript/Clouds.js"></script>
   <script src="Javascript/Lightning.js"></script>

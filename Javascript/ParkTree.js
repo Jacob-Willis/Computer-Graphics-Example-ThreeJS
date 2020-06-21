@@ -6,7 +6,7 @@ oakTreeNum = 8;
 poplarTreeNum = 8;
 groundXLength = 250 / 2;
 groundZLength = 170 / 2;
-// var mtlLoader = new THREE.MTLLoader();
+ //var mtlLoader = new THREE.MTLLoader();
 
 var geometry = new THREE.BoxGeometry(10, 10, 10);
 var material = new THREE.MeshBasicMaterial({ color: 'rgb(255, 255, 255)', });
@@ -41,9 +41,11 @@ deleteTree.onChange(function () {
 var addPalmTreeObj = { addPalmTree: function () { } };
 var addPalmTree = Size.add(addPalmTreeObj, 'addPalmTree').name('Add Palm Tree');
 addPalmTree.onChange(function () {
+  var mtlLoader = new THREE.MTLLoader();
   mtlLoader.setTexturePath("img/tree/");
   mtlLoader.setPath("img/tree/");
-
+  mtlLoader.setTexturePath("img/tree/");
+  mtlLoader.setPath("img/tree/");
   mtlLoader.load("Palm_Tree.mtl", function (materials) {
     materials.preload();
     var objLoader = new THREE.OBJLoader();
@@ -73,6 +75,10 @@ addPalmTree.onChange(function () {
 var addOakTreeObj = { addOakTree: function () { } };
 var addOakTree = Size.add(addOakTreeObj, 'addOakTree').name('Add Oak Tree');
 addOakTree.onChange(function () {
+  var mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setTexturePath("img/tree/");
+  mtlLoader.setPath("img/tree/");
+
   mtlLoader.load("Oak_Tree.mtl", function (materials) {
     materials.preload();
     var objLoader = new THREE.OBJLoader();
@@ -107,6 +113,9 @@ addOakTree.onChange(function () {
 var addPoplarTreeObj = { addPoplarTree: function () { } };
 var addPoplarTree = Size.add(addPoplarTreeObj, 'addPoplarTree').name('Add Poplar Tree');
 addPoplarTree.onChange(function () {
+  var mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setTexturePath("img/tree/");
+  mtlLoader.setPath("img/tree/");
   mtlLoader.load("Poplar_Tree.mtl", function (materials) {
     materials.preload();
     var objLoader = new THREE.OBJLoader();
@@ -135,6 +144,9 @@ addPoplarTree.onChange(function () {
 var addFirTreeObj = { addFirTree: function () { } };
 var addFirTree = Size.add(addFirTreeObj, 'addFirTree').name('Add Fir Tree');
 addFirTree.onChange(function () {
+  var mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setTexturePath("img/tree/");
+  mtlLoader.setPath("img/tree/");
   mtlLoader.load("Fir_Tree.mtl", function (materials) {
     materials.preload();
     var objLoader = new THREE.OBJLoader();
@@ -161,6 +173,7 @@ addFirTree.onChange(function () {
 
 //palm tree
 function palmTree() {
+  var mtlLoader = new THREE.MTLLoader();
   var palmTreeDist = -110;
   var mtlLoader = new THREE.MTLLoader();
   mtlLoader.setTexturePath("img/tree/");
